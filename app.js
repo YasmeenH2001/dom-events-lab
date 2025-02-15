@@ -51,7 +51,8 @@ buttons.forEach((button) => {
             previousValue = currentValue; 
             currentValue = ''; 
             operator = buttonText;     
-          }
+          
+        }
       }
   
       if (event.target.classList.contains('equals')) {
@@ -71,9 +72,14 @@ buttons.forEach((button) => {
         } 
   
         else if (operator === '/') {
+
+                if (parseFloat(currentValue) === 0) {
+                    currentValue = 'Error';
+            }
+            
             currentValue = (parseFloat(previousValue) / parseFloat(currentValue).toExponential(2)).toString(); 
-            display.innerText = currentValue; 
         }
+        display.innerText = currentValue; 
         previousValue = ''; 
         operator = ''; 
     }
