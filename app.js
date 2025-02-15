@@ -1,11 +1,20 @@
+
 /*-------------------------------- Constants --------------------------------*/
+
+   
+
+const buttons = document.querySelectorAll('.button');
+const display = document.querySelector('.display');
+
 
 /*-------------------------------- Variables --------------------------------*/
 
+let currentValue = '';  
+let previousValue = ''; 
+let operator = '';   
+
 /*------------------------ Cached Element References ------------------------*/
 
-const buttons = document.querySelectorAll('.button');
-const calculator = document.querySelector('#calculator');
 
 
 
@@ -13,28 +22,70 @@ const calculator = document.querySelector('#calculator');
 
 buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
-      // This log is for testing purposes to verify we're getting the correct value
-      console.log(event.target.innerText);
-      // Future logic to capture the button's value would go here...
-    });
-  });
+      const buttonText = event.target.innerText;
   
-  calculator.addEventListener('click', (event) => {
-    // This log is for testing purposes to verify we're getting the correct value
-    // You have to click a button to see this log
-    console.log(event.target.innerText);
-  
-    // Example
+      // Handle number clicks
     if (event.target.classList.contains('number')) {
-      // Do something with a number
-    }
+        currentValue += buttonText; 
+        display.innerText = currentValue;
+      }
   
-    // Example
-    if (event.target.innerText === '*') {
-      // Do something with this operator
-    }
-  });
-  
+      // Handle operator clicks
+      if (event.target.classList.contains('operator')) {
 
+        if (buttonText === '+') {
+          previousValue = currentValue;
+          currentValue = '';
+          operator = buttonText;
+
+        } else if (buttonText === '-') {
+          previousValue = currentValue;
+          currentValue = '';
+          operator = buttonText;
+
+        } else if (buttonText === '*') {
+          previousValue = currentValue;
+          currentValue = '';
+          operator = buttonText;
+
+        } else if (buttonText === '/') {
+          previousValue = currentValue;
+          currentValue = '';
+          operator = buttonText;
+        }
+      }
+  
+      // Handle equals button
+      if (event.target.classList.contains('equals')) {
+
+        if (operator === '+') {
+          currentValue = (parseFloat(previousValue) + parseFloat(currentValue)).toString();
+          display.innerText = currentValue;
+
+        } else if (operator === '-') {
+          currentValue = (parseFloat(previousValue) - parseFloat(currentValue)).toString();
+          display.innerText = currentValue;
+
+        } else if (operator === '*') {
+          currentValue = (parseFloat(previousValue) * parseFloat(currentValue)).toString();
+          display.innerText = currentValue;
+          
+        } else if (operator === '/') {
+          currentValue = (parseFloat(previousValue) / parseFloat(currentValue)).toString();
+          display.innerText = currentValue;
+        }
+        previousValue = '';
+        operator = '';
+      }
+  
 
 /*-------------------------------- Functions --------------------------------*/
+
+if (buttonText === 'C') {
+    currentValue = '';
+    previousValue = '';
+    operator = '';
+    display.innerText = '0';
+  }
+});
+});
